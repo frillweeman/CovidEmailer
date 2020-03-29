@@ -13,8 +13,8 @@ exports.dailyEmail = functions.pubsub.schedule("0 8 * * *").onRun(context => {
   let transporter = nodemailer.createTransport({
     host: "smtpout.secureserver.net",
     auth: {
-      user: "freemanwill8@gmail.com",
-      pass: functions.config().smtp.password
+      user: functions.config().email.username,
+      pass: functions.config().email.password
     }
   });
 
