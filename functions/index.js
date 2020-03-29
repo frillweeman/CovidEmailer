@@ -20,6 +20,8 @@ exports.dailyEmail = functions.pubsub.schedule("0 8 * * *").onRun(context => {
 
   const html = `This is The Cube`;
 
+  let will = "freeman";
+
   transporter
     .sendMail({
       from: "digitalsignage@uah.edu",
