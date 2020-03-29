@@ -1,3 +1,4 @@
+const config = require("firebase-functions").config();
 const test = require("firebase-functions-test")(
   {
     databaseURL: "https://alavirus-61e7d.firebaseio.com",
@@ -6,6 +7,9 @@ const test = require("firebase-functions-test")(
   },
   "alavirus-61e7d-firebase-adminsdk-qrhzr-8314323fea.json"
 );
+
+// use real data for test data
+test.mockConfig(config);
 
 const functions = require("../index.js");
 
