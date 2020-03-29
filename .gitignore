@@ -25,4 +25,4 @@ yarn-error.log*
 package-lock.json
 
 .firebase/
-*adminsdk*.json
+*firebase-key*.json
