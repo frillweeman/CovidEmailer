@@ -13,7 +13,7 @@ exports.dailyEmail = functions.pubsub.schedule("0 8 * * *").onRun(context => {
   let transporter = nodemailer.createTransport({
     host: "smtpout.secureserver.net",
     auth: {
-      user: "digitalsignage@uah.edu",
+      user: "freemanwill8@gmail.com",
       pass: functions.config().smtp.password
     }
   });
@@ -24,7 +24,7 @@ exports.dailyEmail = functions.pubsub.schedule("0 8 * * *").onRun(context => {
     .sendMail({
       from: "digitalsignage@uah.edu",
       to: "hohosanta@me.com",
-      subject: "New User - Telepark",
+      subject: `X Cases Today!!!`,
       html: html
     })
     .then(info => {
