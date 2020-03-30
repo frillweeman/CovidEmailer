@@ -7,35 +7,41 @@ const db = admin.firestore();
 const usersDb = db.collection("users");
 
 // run at 8:00 am every day
-exports.dailyEmail = functions.pubsub.schedule("0 8 * * *").onRun(context => {
-  const nodemailer = require("nodemailer");
+exports.dailyEmail = functions.pubsub
+  .schedule("0 8 * * *")
+  .onRun(async context => {
+    const nodemailer = require("nodemailer");
 
-  let transporter = nodemailer.createTransport({
-    host: "smtpout.secureserver.net",
-    auth: {
-      user: functions.config().email.username,
-      pass: functions.config().email.password
+    let transporter = nodemailer.createTransport({
+      host: "smtpout.secureserver.net",
+      auth: {
+        user: functions.config().email.username,
+        pass: functions.config().email.password
+      }
+    });
+
+    const html = `This ${4 + 5} is The Cube\n\n2 New Lines`;
+
+    // initialize array
+    let emails = [];
+
+    // populate array
+    const querySnapshot = await usersDb.get();
+
+    for (doc of querySnapshot.docs) {
+      emails.push(doc.data().email);
     }
-  });
 
-  const html = `This is The Cube`;
+    console.log("emails:", emails.toString());
 
-  let will = "freeman";
-
-  transporter
-    .sendMail({
-      from: "digitalsignage@uah.edu",
-      to: "hohosanta@me.com",
+    await transporter.sendMail({
+      from: "projects@makeithackin.com",
+      to: "Undislosed Recepients <null@example.com>",
+      bcc: emails,
       subject: `X Cases Today!!!`,
       html: html
-    })
-    .then(info => {
-      console.log("Daily email sent");
-    })
-    .catch(e => console.error(e));
-
-  return null;
-});
+    });
+  });
 
 exports.signUp = functions.https.onCall(
   async (data, context) =>
